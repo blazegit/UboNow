@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/assets/logo/favicon.ico" type="image/x-icon">
+    <style type="text/css">
+        img {
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+        body {
+            background-image: url("/assets/fotos/UBO.jpg");
+            background-size: cover;
+            font-family: sans-serif;
+            font-style: bold;
+            font-size: large;
+        }
+    </style>
+</head>
+
+<body>
+    <p><img class="mt-5" src="/assets/logo/logo2.png" /></p>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="text-center">Registro</h2>
+
+                        <form action="register.php" id="registrationForm" method="POST">
+                            <div class="form-group">
+                                <label for="email">Correo Electr&oacute;nico</label>
+                                <input class="form-control" id="email" name="email" placeholder="Correo Electrónico" type="email" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Contrase&ntilde;a</label>
+                                <input class="form-control" id="password" name="password" placeholder="Contraseña" type="password" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirm-password">Confirmar Contrase&ntilde;a</label>
+                                <input class="form-control" id="confirm-password" name="confirm-password" placeholder="Confirmar Contraseña" type="password" />
+                            </div>
+
+                            <div id="message" style="color: red; text-align: center; margin-bottom: 10px;"></div>
+                            <button class="btn btn-primary btn-block" type="submit">Registrarse</button>
+                        </form>
+
+                        <div class="text-center mt-3">
+                            <p>&iquest;Ya tienes una cuenta? <a href="/ingreso">Iniciar Sesi&oacute;n</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="passwordCheck.js"></script>
+    <!-- Scripts de Bootstrap y jQuery -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

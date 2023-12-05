@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Reservación de Horas</title>
+    <script src="/../check-login/check_login.js"></script>
+    <link rel="shortcut icon" href="/assets/logo/favicon.ico" type="image/x-icon">
+    <script src="horario.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    
+    <!-- Bootstrap JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+
+
+    <style>
+    
+     body{
+	margin:0;
+	padding:0;
+	font-family:"arial",heletica,sans-serif;
+	font-size:12px;
+    background: #2980b9 url('https://static.tumblr.com/03fbbc566b081016810402488936fbae/pqpk3dn/MRSmlzpj3/tumblr_static_bg3.png') repeat 0 0;
+	-webkit-animation: 10s linear 0s normal none infinite animate;
+	-moz-animation: 10s linear 0s normal none infinite animate;
+	-ms-animation: 10s linear 0s normal none infinite animate;
+	-o-animation: 10s linear 0s normal none infinite animate;
+	animation: 10s linear 0s normal none infinite animate;
+ 
+}
+ 
+@-webkit-keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+ 
+@-moz-keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+ 
+@-ms-keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+ 
+@-o-keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+ 
+@keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+
+        .container {
+            margin-top: 7%;
+            margin-bottom: 70px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(68, 68, 68, 0.6);
+            background-color: #ffffff;
+            padding: 20px;
+            background-size: cover;
+            font-weight: bold;
+        }
+
+        .celda-hora:not(.event) {
+            cursor: default;
+        }
+
+        .table {
+            user-select: none;
+        }
+
+        .table td {
+            width: 200px;
+            height: 100px;
+            cursor: pointer;
+            position: relative;
+            
+        }
+
+
+        .table td .cell-content {
+            position: absolute;
+            background-color: #D61A3C;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 12px;
+            z-index: 10;
+        }
+        
+        .ventana {
+            position: absolute;
+            background-color: #a0c983;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 12px;
+            border-radius:10px;
+            z-index: 11;
+            box-shadow: 0 0 10px rgba(68, 68, 68, 0.2);
+        }
+        
+        .reserva {
+            position: absolute;
+            background-color: #5681ff;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 12px;
+            border-radius:10px;
+            z-index: 11;
+            box-shadow: 0 0 10px rgba(68, 68, 68, 0.2);
+        }
+
+
+
+        .break {
+            background-color: grey;
+        }
+
+        .break:not(.event) {
+            cursor: default;
+            background-color: grey;
+        }
+
+        .event:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgb(198, 198, 53);
+            border-radius: 10px;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .event-info {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .event-group {
+            position: relative;
+        }
+
+        .event-group:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #FFFFE0;
+            border-radius: 10px;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .assigned {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #d60004;
+            border-radius: 10px;
+            pointer-events: none;
+        }
+        
+        .assigned2 {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #0004d672;
+            border-radius: 10px;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .popup-box {
+            position: fixed;
+            bottom: 5vw;
+            right: 5vw;
+            width: 30vw;
+            height: 30vh;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            padding: 3vw;
+            display: none;
+            z-index: 9999;
+            animation: fade-in 0.8s ease forwards;
+            overflow: hidden;
+        }
+
+        .popup-box.show {
+            display: block;
+            animation: fade-in 0.8s ease forwards;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 9999;
+        }
+
+        .form-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            margin-left: 10px;
+            border: 30px;
+            cursor: pointer;
+        }
+
+        .close-icon:before {
+            content: '\00D7';
+            font-size: 30px;
+        }
+
+        .close-icon:hover {
+            color: red;
+        }
+
+        .small-text {
+            font-size: 0.1vm;
+            color: #ffe4e5;
+        }
+        
+
+
+        .success-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .success-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            font-size: 200%;
+        }
+
+        .btn1 {
+            margin-right: 40px;
+        }
+
+        .btn2 {
+            margin-left: -25px;
+        }
+
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+
+    
+</head>
+
+
+
+<body>
+<div id="header-container"></div>
+    <script>
+        // Use JavaScript or AJAX to fetch and insert the header
+        fetch('/header/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+            });
+    </script>
+  <div class="container">
+      
+    <div class="form-group d-flex justify-content-end botones">
+        <button class="btn btn-success btn1" onclick="toggleModal()">Almuerzo</button>
+        <button  id="agregarAsignaturas" class="btn btn-primary btn1" onclick="toggleEventListener()">Agregar asignaturas</button>
+        <button  id="agregarAsignaturas" class="btn btn-danger btn1" onclick="eliminarAsignaturas()">Eliminar asignaturas</button>
+    </div>
+
+
+    <table id="scheduleTable" class="table table-bordered table-hover ">
+      <thead class="thead-dark">
+        <tr>
+          <th style="width: 12%;">Hora</th>
+          <th style="width: 14.6%;">Lunes</th>
+          <th style="width: 14.6%;">Martes</th>
+          <th style="width: 14.6%;">Miércoles</th>
+          <th style="width: 14.6%;">Jueves</th>
+          <th style="width: 14.6%;">Viernes</th>
+        </tr>
+      </thead>
+      <tr>
+        <td class="celda-hora">08:30 - 09:15</td>
+        <td id="1L"></td>
+        <td id="1M"></td>
+        <td id="1X"></td>
+        <td id="1J"></td>
+        <td id="1V"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">09:15 - 10:00</td>
+        <td id="2L"></td>
+        <td id="2M"></td>
+        <td id="2X"></td>
+        <td id="2J"></td>
+        <td id="2V"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora break">10:00 - 10:10</td>
+        <td class="break"></td>
+        <td class="break"></td>
+        <td class="break"></td>
+        <td class="break"></td>
+        <td class="break"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">10:10 - 10:55</td>
+        <td id="3L"></td>
+        <td id="3M"></td>
+        <td id="3X"></td>
+        <td id="3J"></td>
+        <td id="3V"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">10:55 - 11:40</td>
+        <td id="4L"></td>
+        <td id="4M"></td>
+        <td id="4X"></td>
+        <td id="4J"></td>
+        <td id="4V"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora break">11:40 - 11:45</td>
+        <td class="break"></td>
+        <td class="break"></td>
+        <td class="break"></td>
+        <td class="break"></td>
+        <td class="break"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">11:45 - 12:30</td>
+        <td id="5L"></td>
+        <td id="5M"></td>
+        <td id="5X"></td>
+        <td id="5J"></td>
+        <td id="5V"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">12:30 - 13:15</td>
+        <td id="6L"></td>
+        <td id="6M"></td>
+        <td id="6X"></td>
+        <td id="6J"></td>
+        <td id="6V"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora break">13:15 - 13:30</td>
+        <td class="break"></td>
+        <td class="break"></td>
+        <td class="break"></td>
+        <td class="break"></td>
+        <td class="break"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">13:30 - 14:15</td>
+        <td id="7L"></td>
+        <td id="7M"></td>
+        <td id="7X"></td>
+        <td id="7J"></td>
+        <td id="7V"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">14:15 - 15:00</td>
+        <td id="8L"></td>
+        <td id="8M"></td>
+        <td id="8X"></td>
+        <td id="8J"></td>
+        <td id="8V"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora break">15:00 - 15:10</td>
+        <td class="break"></td>
+        <td class="break"></td>
+        <td class="break"></td>
+        <td class="break"></td>
+        <td class="break"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">15:10 - 15:55</td>
+        <td id="9L"></td>
+        <td id="9M"></td>
+        <td id="9X"></td>
+        <td id="9J"></td>
+        <td id="9V"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">15:55 - 16:40</td>
+        <td id="10L"></td>
+        <td id="10M"></td>
+        <td id="10X"></td>
+        <td id="10J"></td>
+        <td id="10V"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">16:45 - 17:30</td>
+        <td id="11L"></td>
+        <td id="11M"></td>
+        <td id="11X"></td>
+        <td id="11J"></td>
+        <td id="11V"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">17:30 - 18:15</td>
+        <td id="12L"></td>
+        <td id="12M"></td>
+        <td id="12X"></td>
+        <td id="12J"></td>
+        <td id="12V"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora break">18:15 - 18:30</td>
+        <td class="break"></td>
+        <td class="break"></td>
+        <td class="break"></td>
+        <td class="break"></td>
+        <td class="break"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">18:30 - 19:10</td>
+        <td id="13L"></td>
+        <td id="13M"></td>
+        <td id="13X"></td>
+        <td id="13J"></td>
+        <td id="13V"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">19:10 - 19:50</td>
+        <td id="14L"></td>
+        <td id="14M"></td>
+        <td id="14X"></td>
+        <td id="14J"></td>
+        <td id="14V"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">19:50 - 20:30</td>
+        <td id="15L"></td>
+        <td id="15M"></td>
+        <td id="15X"></td>
+        <td id="15J"></td>
+        <td id="15V"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">20:30 - 21:10</td>
+        <td id="16L"></td>
+        <td id="16M"></td>
+        <td id="16X"></td>
+        <td id="16J"></td>
+        <td id="16V"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">21:10 - 21:50</td>
+        <td id="17L"></td>
+        <td id="17M"></td>
+        <td id="17X"></td>
+        <td id="17J"></td>
+        <td id="17V"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">21:50 - 22:30</td>
+        <td id="18L"></td>
+        <td id="18M"></td>
+        <td id="18X"></td>
+        <td id="18J"></td>
+        <td id="18V"></td>
+      </tr>
+    </table>
+  </div>
+  
+  <div id="confirmation-box" class="popup-box">
+    <div class="confirmation-content">
+      <h3>Confirmar Horas</h3>
+      <p>Quiere confirmar las horas seleccionadas?</p>
+      <button class="btn btn-primary" id="confirm-button">Confirmar</button>
+    </div>
+  </div>
+
+
+
+  <div class="success-overlay" id="success-overlay">
+    <div class="success-message">
+      <h2>Éxito</h2>
+      <p>Los datos se ingresaron correctamente</p>
+    </div>
+
+  </div>
+  
+<div class="overlay" id="overlay">
+    <div class="form-container">
+        <h2>Ingrese los datos</h2>
+        <span class="close-icon"></span>
+        <form id="asignaturasForm">
+            <input type="hidden" name="selected-events" id="selected-events">
+            <div class="form-group">
+                <label for="asignatura">Nombre de la asignatura</label>
+                <input type="text" id="asignatura" name="asignatura" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="sala">Sala</label>
+                <input type="text" id="sala" name="sala" class="form-control" placeholder="Opcional">
+            </div>
+            <div class="form-group">
+                <label for="profesor">Profesor</label>
+                <input type="text" id="profesor" name="profesor" class="form-control" placeholder="Opcional">
+            </div>
+            <button type="button" onclick="submitAsignaturas()" class="btn btn-primary">Ingresar Datos</button>
+        </form>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Seleccione los días en que va a almorzar</h5>
+                <button type="button" class="close" onclick="toggleModal()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="lunes">
+                            <input type="checkbox" id="L"> Lunes
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="martes">
+                            <input type="checkbox" id="M"> Martes
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="miercoles">
+                            <input type="checkbox" id="X"> Miércoles
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="jueves">
+                            <input type="checkbox" id="J"> Jueves
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="viernes">
+                            <input type="checkbox" id="V"> Viernes
+                        </label>
+                    </div>
+
+                    <!-- Spinner HTML code (centered at the bottom) -->
+                    <div class="text-center mt-3">
+                        <div id="loadingSpinner" class="spinner-border text-primary d-none" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="toggleModal()">Cerrar</button>
+                <button id="btn-almuerzo" type="button" class="btn btn-primary" onclick="submitForm()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+  </body>
+</html>

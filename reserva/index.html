@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reservación de Horas</title>
+    <link rel="shortcut icon" href="/assets/logo/favicon.ico" type="image/x-icon">
+    <script src="/../check-login/check_login.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include Bootstrap JS library -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="reservas.js"></script>
+
+    <style>
+        .contenedor {
+            margin: 7vh;
+            margin-top: 7%;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(68, 68, 68, 0.6);
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 20px; /* Fixed border-radius in pixels */
+        }
+        
+        body{
+	margin:0;
+	padding:0;
+	font-family:"arial",heletica,sans-serif;
+	font-size:12px;
+    background: #2980b9 url('https://static.tumblr.com/03fbbc566b081016810402488936fbae/pqpk3dn/MRSmlzpj3/tumblr_static_bg3.png') repeat 0 0;
+	-webkit-animation: 10s linear 0s normal none infinite animate;
+	-moz-animation: 10s linear 0s normal none infinite animate;
+	-ms-animation: 10s linear 0s normal none infinite animate;
+	-o-animation: 10s linear 0s normal none infinite animate;
+	animation: 10s linear 0s normal none infinite animate;
+ 
+}
+ 
+@-webkit-keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+ 
+@-moz-keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+ 
+@-ms-keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+ 
+@-o-keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+ 
+@keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+    </style>
+</head>
+
+<body>
+    <div id="header-container"></div>
+    
+    <script>
+        // Use JavaScript or AJAX to fetch and insert the header
+        fetch('/header/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+            });
+    </script>
+
+    <div id="myCarousel" class="carousel slide" data-interval="false">
+        <!-- Indicators -->
+        
+        <!-- Slides -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="contenedor">
+                    <!-- Content for the first slide -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <img src="/assets/fotos/biblioteca.jfif" style="height:30vh;object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Reservar Sala de Estudio</h5>
+                                    <p class="card-text">Haz clic aquí para reservar una sala de estudio.</p>
+                                    <a href="#myCarousel" class="btn btn-primary" data-slide-to="1">Reservar</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <img src="/assets/fotos/gym_viel.jpg" style="height:30vh;object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Reservar Gimnasio</h5>
+                                    <p class="card-text">Haz clic aquí para reservar el gimnasio.</p>
+                                    <a href="#myCarousel" class="btn btn-primary" data-slide-to="2">Reservar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="mt-4">Tus reservas: </h3>
+                    <!-- Schedule Table -->
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h5 id="salaHeader">Reservas Sala de estudio -/3 </h5>
+                            <table id="tablaSalas" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Dia</th>
+                                        <th>Hora</th>
+                                        <th>Sala</th>
+                                        <th>Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Add schedule rows here -->
+                                    
+                                    <!-- Add more rows as needed -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h5 id="gymHeader">Reservas GYM -/3</h5>
+                            <table id="tablaGYM" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Dia</th>
+                                        <th>Hora</th>
+                                        <th>GYM</th>
+                                        <th>Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Add schedule rows here -->
+                                   
+                                    <!-- Add more rows as needed -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <div class="contenedor">
+                    <h2>Reserva Sala de Estudio</h2>
+                    <form>
+                        <div class="form-group">
+                            <input type="hidden" name="hidden_day" value="">
+                            <input type="hidden" name="hidden_room" value="">
+                            <input type="hidden" name="hidden_hour" value="">
+
+                            <label>Seleccione un día:</label>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" name="day">
+                                <label class="btn btn-primary" id="button1">
+                                    <input type="radio" name="day" value="">
+                                </label>
+                                <label class="btn btn-primary" id="button2">
+                                    <input type="radio" name="day" value="">
+                                </label>
+                                <label class="btn btn-primary" id="button3">
+                                    <input type="radio" name="day" value="">
+                                </label>
+                                <label class="btn btn-primary" id="button4">
+                                    <input type="radio" name="day" value="">
+                                </label>
+                                <label class="btn btn-primary" id="button5">
+                                    <input type="radio" name="day" value="">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Seleccione una sala:</label>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" name="room">
+                                <label class="btn">
+                                    <input type="radio" name="room" value="6" disabled> Sala 1
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" name="room" value="7" disabled> Sala 2
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" name="room" value="8" disabled> Sala 3
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" name="room" value="9" disabled> Sala 4
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Seleccione una hora:</label>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" name="hour">
+                                <label class="btn">
+                                    <input type="radio" name="hour" value="09:00:00" disabled> 9:00
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" name="hour" value="10:00:00" disabled> 10:00
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" name="hour" value="11:00:00" disabled> 11:00
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" name="hour" value="12:00:00" disabled> 12:00
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" name="hour" value="13:00:00" disabled> 13:00
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" name="hour" value="14:00:00" disabled> 14:00
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" name="hour" value="15:00:00" disabled> 15:00
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" name="hour" value="16:00:00" disabled> 16:00
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" name="hour" value="17:00:00" disabled> 17:00
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" name="hour" value="18:00:00" disabled> 18:00
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" name="hour" value="19:00:00" disabled> 19:00
+                                </label>
+                                <label class="btn">
+                                    <input  type="radio" name="hour" value="20:00:00" disabled> 20:00
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success">Reservar</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <div class="contenedor">
+                    <!-- Content for the fourth slide -->
+                    <h2>Reserva Hora GYM</h2>
+                    <form >
+                        <div class="form-group">
+                            <input type="hidden" name="hidden_day" value="">
+                            <input type="hidden" name="hidden_room" value="">
+                            <input type="hidden" name="hidden_hour" value="">
+
+                            <label>Seleccione un día:</label>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" name="day">
+                                <label class="btn btn-primary" id="button1">
+                                    <input type="radio" name="day" value="">
+                                </label>
+                                <label class="btn btn-primary" id="button2">
+                                    <input type="radio" name="day" value="">
+                                </label>
+                                <label class="btn btn-primary" id="button3">
+                                    <input type="radio" name="day" value="">
+                                </label>
+                                <label class="btn btn-primary" id="button4">
+                                    <input type="radio" name="day" value="">
+                                </label>
+                                <label class="btn btn-primary" id="button5">
+                                    <input type="radio" name="day" value="">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Seleccione un GYM:</label>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons" name="room">
+                <label class="btn">
+                    <input type="radio" name="room" value="5" disabled> Gym Rondizzoni
+                </label>
+                <label class="btn">
+                    <input type="radio" name="room" value="4" disabled> Gym Viel
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Seleccione una hora:</label>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons" name="hour">
+                <label class="btn">
+                    <input type="radio" name="hour" value="09:00:00" disabled> 9:00
+                </label>
+                <label class="btn">
+                    <input type="radio" name="hour" value="10:00:00" disabled> 10:00
+                </label>
+                <label class="btn">
+                    <input type="radio" name="hour" value="11:00:00" disabled> 11:00
+                </label>
+                <label class="btn">
+                    <input type="radio" name="hour" value="12:00:00" disabled> 12:00
+                </label>
+                <label class="btn">
+                    <input type="radio" name="hour" value="13:00:00" disabled> 13:00
+                </label>
+                <label class="btn">
+                    <input type="radio" name="hour" value="14:00:00" disabled> 14:00
+                </label>
+                <label class="btn">
+                    <input type="radio" name="hour" value="15:00:00" disabled> 15:00
+                </label>
+                <label class="btn">
+                    <input type="radio" name="hour" value="16:00:00" disabled> 16:00
+                </label>
+                <label class="btn">
+                    <input type="radio" name="hour" value="17:00:00" disabled> 17:00
+                </label>
+                <label class="btn">
+                    <input type="radio" name="hour" value="19:00:00" disabled> 18:00
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Reservar</button>
+    </form>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+  <!-- Modal Template -->
+                
+<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Esta seguro que desea cancelar la hora?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="confirmCancel">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Hora ingresada correctamente!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Content will be dynamically added here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

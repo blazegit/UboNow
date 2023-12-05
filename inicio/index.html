@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/logo/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/logo/favicon.ico" type="image/x-icon">
+    <script src="/../inicio/inicio.js"></script>
+
+    <script src="/../check-login/check_login.js"></script>
+    
+    
+    
+    <title>Toma de Horarios</title>
+    
+    <meta charset="UTF-8">
+    <title>Reservaci®Æn de Horas</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include Bootstrap JS library -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    
+    <style>
+   
+   
+        body{
+	margin:0;
+	padding:0;
+	font-family:"arial",heletica,sans-serif;
+	font-size:12px;
+    background: #2980b9 url('https://static.tumblr.com/03fbbc566b081016810402488936fbae/pqpk3dn/MRSmlzpj3/tumblr_static_bg3.png') repeat 0 0;
+	-webkit-animation: 10s linear 0s normal none infinite animate;
+	-moz-animation: 10s linear 0s normal none infinite animate;
+	-ms-animation: 10s linear 0s normal none infinite animate;
+	-o-animation: 10s linear 0s normal none infinite animate;
+	animation: 10s linear 0s normal none infinite animate;
+ 
+}
+ 
+@-webkit-keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+ 
+@-moz-keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+ 
+@-ms-keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+ 
+@-o-keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+ 
+@keyframes animate {
+	from {background-position:0 0;}
+	to {background-position: 500px 0;}
+}
+
+        .celda-hora:not(.event) {
+            cursor: default;
+        }
+
+        .table {
+            user-select: none;
+        }
+
+        .table td {
+            width: 200px;
+            height: 100px;
+            cursor: default;
+            position: relative;
+            
+        }
+
+
+        .table td .cell-content {
+            position: absolute;
+            background-color: #D61A3C;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 12px;
+            z-index: 10;
+        }
+        
+        .ventana {
+            position: absolute;
+            background-color: #a0c983;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 12px;
+            border-radius:10px;
+            z-index: 11;
+            box-shadow: 0 0 10px rgba(68, 68, 68, 0.2);
+        }
+        
+        .reserva {
+            position: absolute;
+            background-color: #5681ff;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 12px;
+            border-radius:10px;
+            z-index: 11;
+            box-shadow: 0 0 10px rgba(68, 68, 68, 0.2);
+        }
+
+        .break {
+            background-color: grey;
+        }
+
+        .break:not(.event) {
+            cursor: default;
+            background-color: grey;
+        }
+
+        .event:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgb(198, 198, 53);
+            border-radius: 10px;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .event-info {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .event-group {
+            position: relative;
+        }
+
+        .event-group:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #FFFFE0;
+            border-radius: 10px;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .container-box {
+            height: 80vh;
+            border-radius: 20px;
+            background-color: #b0c2d1;
+            box-shadow: 0 0 20px rgba(68, 68, 68, 0.6);
+            background-color: #ffffff;
+
+        }
+        
+        .container-fluid{
+            margin-top: 100px;
+        }
+        
+         .container-box {
+            background-color: #b0c2d1;
+        }
+        
+       
+        .custom-scrollbar {
+          overflow-y: auto; /* Use 'auto' instead of 'scroll' */
+          border-radius: 10px; /* Adjust the border-radius as needed */
+         
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 12px; /* Set the width of the scrollbar */
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background-color: #888; /* Set the color of the thumb */
+          border-radius: 20px; /* Set the border-radius of the thumb */
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+          
+          border-radius: 8px; /* Set the border-radius of the track */
+        }
+
+
+      
+
+        
+    </style>
+
+
+
+
+    
+</head>
+<body>
+    <div id="header-container"></div>
+    <div>
+        <!-- Your page content here -->
+    </div>
+    <script>
+        // Use JavaScript or AJAX to fetch and insert the header
+        fetch('/header/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+            });
+    </script>
+    
+<div class="container-fluid">
+    <div  class="row">
+        <!-- Columna Izquierda -->
+        <div  class="col-md-4  mt-4" style="z-index: 1;"> <!-- Add z-index to control stacking order -->
+            <div class="container-box p-4 m-1">
+                <h2 class="text-center" id="greeting">Hola!</h2>
+                <div class="">
+                    <h4>Pr&oacute;xima clase:</h4>
+                    <p id="proximaClase">-</p>
+                </div>
+                <a href="/horario" class="d-block mt-2">
+                    <button class="btn btn-primary custom-btn w-100 mt-2">Mi Horario</button>
+                </a>
+                
+                <a href="/reserva" class="d-block mt-2">
+                    <button class="btn btn-success custom-btn w-100">Reservar</button>
+                </a>
+            </div>
+        </div>
+        <!-- Columna Central -->
+       <div class="col-md-4  mt-4" style="z-index: 1; border: none;">
+    <div class="container-box p-4 m-1 custom-scrollbar">
+        <h2 class="text-center">Horario</h2>
+        <table id="scheduleTable" class="table table-bordered table-hover ">
+      <thead class="thead-dark">
+        <tr>
+          <th style="width: 30%;">Hora</th>
+          <th id="dia" style="width: 70%;">Lunes</th>
+        </tr>
+      </thead>
+      <tr>
+        <td class="celda-hora">08:30 - 09:15</td>
+        <td id="1"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">09:15 - 10:00</td>
+        <td id="2"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora break">10:00 - 10:10</td>
+        <td class="break"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">10:10 - 10:55</td>
+        <td id="3"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">10:55 - 11:40</td>
+        <td id="4"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora break">11:40 - 11:45</td>
+        <td class="break"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">11:45 - 12:30</td>
+        <td id="5"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">12:30 - 13:15</td>
+        <td id="6"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora break">13:15 - 13:30</td>
+        <td class="break"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">13:30 - 14:15</td>
+        <td id="7"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">14:15 - 15:00</td>
+        <td id="8"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora break">15:00 - 15:10</td>
+        <td class="break"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">15:10 - 15:55</td>
+        <td id="9"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">15:55 - 16:40</td>
+        <td id="10"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">16:45 - 17:30</td>
+        <td id="11"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">17:30 - 18:15</td>
+        <td id="12"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora break">18:15 - 18:30</td>
+        <td class="break"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">18:30 - 19:10</td>
+        <td id="13"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">19:10 - 19:50</td>
+        <td id="14"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">19:50 - 20:30</td>
+        <td id="15"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">20:30 - 21:10</td>
+        <td id="16"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">21:10 - 21:50</td>
+        <td id="17"></td>
+      </tr>
+      <tr>
+        <td class="celda-hora">21:50 - 22:30</td>
+        <td id="18"></td>
+      </tr>
+</table>
+
+
+    </div>
+</div>
+
+        <!-- Columna Derecha -->
+        <div class="col-md-4  mt-4" style="z-index: 1;"> <!-- Add z-index to control stacking order -->
+            <div class="container-box p-4 m-1">
+                <h2 class="text-center">Recordatorios</h2>
+                <div style="border-radius:20px;" class=" bg-primary bg-gradient p-3 m-1">
+                    <h4>Ventana recomendada de almuerzo:</h4>
+                    <p id="recordatorioAlmuerzo">No encontrada</p>
+                </div>
+                <div style="border-radius:20px;" class=" bg-primary bg-gradient p-3 m-1">
+                    <h4>Tu pr√≥xima hora reservada es:</h4>
+                    <p id="recordatorioReserva"> No encontrada</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+
+</html>
