@@ -42,7 +42,7 @@
 - **Class Management:**
   - View, add, or remove classes in a centralized schedule page.
   - Option to request a lunch window time directly from the schedule page.
-  - The class time block structure is inspired by [a previous personal project](previous_personal_project_link).
+  
 
   - **Task Management:**
     - Integrates a versatile task management system with the function `addTask(startTime, endTime, taskName, dayIndex, className)`.
