@@ -64,4 +64,4 @@
 - **Straightforward Reservation Process:**
   - Making a reservation is user-friendly—simply click on the desired reservation type (study room or gym), choose the location, day, and hour.
 
-![Ubonow Reservation](https://cdn.discordapp.com/attachments/1159220716189778052/1181649628333084682/ezgif.com-video-to-gif_1.gif)
+![Ubonow Reservation](https://cdn.discordapp.com/attachments/1159220716189778052/1181654750131933305/final.gif)
