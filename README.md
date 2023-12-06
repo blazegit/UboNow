@@ -70,12 +70,6 @@
   <img src="/assets/Github/reservation.gif" alt="reservation">
 </p>
 
-## Database
-
-The database is powered by MySQL. Here's a general overview:
-
-![Ubonow Schedule](/assets/Github/database.png)
-
 ## AI
 
 The AI module, hosted on a Flask server, is designed to optimize lunchtime recommendations based on class schedules. Here's a concise overview of the algorithm:
@@ -99,3 +93,10 @@ The core of the AI functionality revolves around a clustering algorithm, specifi
 
 
 Feel free to explore the code in the "AI" folder for a more in-depth understanding of the implementation details.
+
+
+## Database
+
+The database is powered by MySQL. Here's a general overview:
+
+![Ubonow Schedule](/assets/Github/database.png)
