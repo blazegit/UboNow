@@ -53,7 +53,7 @@
     - The system intelligently considers:
       - Student schedules to prevent lunch windows during class hours.
       - User-defined preferences for specific days of the week.
-    - You can find the AI pyhton file on the "AI" folder, it was being hosted on a external flusk server.
+    - You can find the AI python file in the “AI” folder, which is being hosted on an external flusk server.
 
 ![Ubonow Schedule](/assets/Github/schedule.png)
 
@@ -88,7 +88,7 @@ The core of the AI functionality revolves around a clustering algorithm, specifi
 
 3. **Optimal Lunch Window:**
    - The algorithm finds the optimal lunch window by analyzing the cluster centers.
-   - It avoids lunch windows that overlap with the requesting student class hours, ensuring that students are not in classes during the recommended lunchtime.
+   - It avoids lunch windows that overlap with the requesting student's class hours, ensuring that students are not in classes during the recommended lunchtime.
 
 
 
