@@ -69,3 +69,33 @@
 <p align="center">
   <img src="/assets/Github/reservation.gif" alt="reservation">
 </p>
+
+## Database
+
+The database is powered by MySQL. Here's a general overview:
+
+![Ubonow Schedule](/assets/Github/database.png)
+
+## AI
+
+The AI module, hosted on a Flask server, is designed to optimize lunchtime recommendations based on class schedules. Here's a concise overview of the algorithm:
+
+### Clustering Algorithm
+
+The core of the AI functionality revolves around a clustering algorithm, specifically the K-Means clustering algorithm from the scikit-learn library. This algorithm is employed to identify patterns in class schedules and determine the concentration of students in classes.
+
+### Logic Overview
+
+1. **Data Preparation:**
+   - The system collects class schedules from various students, considering different days of the week.
+
+2. **Clustering:**
+   - For each day, the system applies K-Means clustering to identify clusters of class schedules.
+
+3. **Optimal Lunch Window:**
+   - The algorithm finds the optimal lunch window by analyzing the cluster centers.
+   - It avoids lunch windows that overlap with the requesting student class hours, ensuring that students are not in classes during the recommended lunchtime.
+
+
+
+Feel free to explore the code in the "AI" folder for a more in-depth understanding of the implementation details.
